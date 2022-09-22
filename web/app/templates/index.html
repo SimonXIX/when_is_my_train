@@ -1,0 +1,30 @@
+<!--
+# @name: index.html
+# @creation_date: 2022-06-07
+# @license: The MIT License <https://opensource.org/licenses/MIT>
+# @author: Simon Bowie <simon.bowie.19@gmail.com>
+# @purpose: Basic layout for homepage
+# @acknowledgements:
+# https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3
+# Bootstrap 5.1.3: https://getbootstrap.com/
+-->
+
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row text-center">
+
+      {% for result in results %}
+        <h3 class="mb-2">{{ result['locationDetail']['description']}}</h3>
+        <p class="mb-2">
+          Scheduled time: {{ result['locationDetail']['gbttBookedArrival'] }}
+        </p>
+        <p>
+          Actual time: {{ result['locationDetail']['realtimeArrival'] }}
+        </p>
+      {% endfor %}
+
+    </div>
+  </div>
+{% endblock %}

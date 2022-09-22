@@ -1,0 +1,56 @@
+<!--
+# @name: base.html
+# @creation_date: 2022-06-07
+# @license: The MIT License <https://opensource.org/licenses/MIT>
+# @author: Simon Bowie <simon.bowie.19@gmail.com>
+# @purpose: Basic layout
+# @acknowledgements:
+# https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3
+# Bootstrap 5.1.3: https://getbootstrap.com/
+# Flask-Moment: https://flask-moment.readthedocs.io/en/latest/
+-->
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+    {{ moment.include_moment() }}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>when's my next train?</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="{{ url_for('static',filename='styles/custom.css') }}" rel="stylesheet">
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Barlow:300,400,700&display=swap" rel='stylesheet' type='text/css'>
+</head>
+<body class="d-flex flex-column h-100">
+  <header>
+    <nav class="navbar">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="{{ url_for('index')}}"><h1 class="display-1 fst-italic">when's my train?</h1></a>
+          <h2>where "my" refers specifically to Simon Bowie</h2>
+      </div>
+    </nav>
+  </header>
+
+  <main class="flex-shrink-0">
+
+  {% block content %}
+  {% endblock %}
+
+  </main>
+
+  <!-- Sticky footer-->
+  <footer class="footer py-3 mt-auto bg-light">
+    <div class="container text-center">
+        <span class="text-muted footer">All data retrieved is from <a href="https://www.realtimetrains.co.uk/">Realtime Trains</a>, an independent provider of real-time information about train services across the Great British rail network.</span>
+        <span class="text-muted footer">Code is © {{ moment().format('YYYY') }} <a href="https://simonxix.com">Simon Bowie</a>, is available at <a href="https://github.com/SimonXIX/when_is_my_train">https://github.com/SimonXIX/when_is_my_train</a>, and is licensed under the <a href="https://mit-license.org/">MIT License</a>.</span>
+    </div>
+  </footer>
+  <!-- JavaScript -->
+  <!-- jQuery first, then Popper JS, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -12,17 +12,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container-fluid">
-    <div class="row text-center">
+  <div class="container-fluid px-5">
 
       {% for result in results %}
-        <h3 class="mb-2">{{ result['locationDetail']['description']}}</h3>
-        <p class="mb-2">
-          Scheduled time: {{ result['locationDetail']['gbttBookedArrival'] }}
-        </p>
-        <p>
-          Actual time: {{ result['locationDetail']['realtimeArrival'] }}
-        </p>
+      <a href="https://www.realtimetrains.co.uk/service/gb-nr:{{ result['serviceUid'] }}/{{ result['runDate'] }}">
+        {% if result['locationDetail']['description'] == "Pollokshaws West" %}
+        <div class="d-flex justify-content-start">
+        {% elif result['locationDetail']['description'] == "Shawlands" %}
+        <div class="d-flex justify-content-end">
+        {% endif %}
+          <div class="mb-2 m-3"><h3>{{ result['locationDetail']['description']}}</h3></div>
+          <br/>
+          <div>
+            <p class="mb-2">
+              Scheduled: {{ result['locationDetail']['gbttBookedArrival'] }}
+            </p>
+            <p>
+              Actual: {{ result['locationDetail']['realtimeArrival'] }}
+            </p>
+          </div>
+        </div>
+      </a>
       {% endfor %}
 
     </div>

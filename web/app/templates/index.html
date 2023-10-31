@@ -15,26 +15,33 @@
   <div class="container-fluid px-5">
 
       {% for result in results %}
-      <a href="https://www.realtimetrains.co.uk/service/gb-nr:{{ result['serviceUid'] }}/{{ result['runDate'] }}">
-        {% if result['locationDetail']['description'] == "Pollokshaws West" %}
-        <div class="d-flex justify-content-start">
-        {% elif result['locationDetail']['description'] == "Shawlands" %}
-        <div class="d-flex justify-content-end">
-        {% endif %}
-          <div class="mb-2 m-3"><h3>{{ result['locationDetail']['description']}}</h3></div>
-          <br/>
-          <div>
-            <p class="mb-2">
-              Scheduled: {{ result['locationDetail']['gbttBookedArrival'] }}
-            </p>
-            <p>
-              Actual: {{ result['locationDetail']['realtimeArrival'] }}
-            </p>
-          </div>
+      {% if result['locationDetail']['description'] == "Pollokshaws West" %}
+      <div class="d-flex justify-content-start">
+      {% elif result['locationDetail']['description'] == "Shawlands" %}
+      <div class="d-flex justify-content-end">
+      {% endif %}
+        <div class="m-3 d-flex align-items-center">
+          <a href="https://www.realtimetrains.co.uk/service/gb-nr:{{ result['serviceUid'] }}/{{ result['runDate'] }}">
+            <h3>{{ result['locationDetail']['description']}}</h3>
+          </a>
         </div>
-      </a>
+        <br/>
+        {% if result['locationDetail']['realtimeArrival'] < result['locationDetail']['gbttBookedArrival'] %}
+          <div class="text-success display-4 m-3">
+            {{ result['locationDetail']['gbttBookedArrival'] }}
+          </div>
+        {% elif result['locationDetail']['realtimeArrival'] > result['locationDetail']['gbttBookedArrival'] %}
+          <div class="text-danger display-2 m-3">
+            Scheduled: {{ result['locationDetail']['gbttBookedArrival'] }}
+            Actual: {{ result['locationDetail']['realtimeArrival'] }}
+          </div>
+        {% elif result['locationDetail']['realtimeArrival'] == result['locationDetail']['gbttBookedArrival'] %}
+          <div class="display-4 m-3">
+            {{ result['locationDetail']['gbttBookedArrival'] }}
+          </div>
+        {% endif %}
+      </div>
       {% endfor %}
-
     </div>
   </div>
 {% endblock %}

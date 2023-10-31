@@ -27,16 +27,16 @@
         </div>
         <br/>
         {% if result['locationDetail']['realtimeArrival'] < result['locationDetail']['gbttBookedArrival'] %}
-          <div class="text-success display-4 m-3">
+          <div class="text-success display-5 m-3">
             {{ result['locationDetail']['gbttBookedArrival'] }}
           </div>
         {% elif result['locationDetail']['realtimeArrival'] > result['locationDetail']['gbttBookedArrival'] %}
-          <div class="text-danger display-2 m-3">
+          <div class="text-danger display-6 m-3">
             Scheduled: {{ result['locationDetail']['gbttBookedArrival'] }}
             Actual: {{ result['locationDetail']['realtimeArrival'] }}
           </div>
         {% elif result['locationDetail']['realtimeArrival'] == result['locationDetail']['gbttBookedArrival'] %}
-          <div class="display-4 m-3">
+          <div class="display-5 m-3">
             {{ result['locationDetail']['gbttBookedArrival'] }}
           </div>
         {% endif %}

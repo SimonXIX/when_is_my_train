@@ -1,0 +1,78 @@
+<!--
+# @name: departures.html
+# @creation_date: 2023-02-24
+# @license: The MIT License <https://opensource.org/licenses/MIT>
+# @author: Simon Bowie <simon.bowie.19@gmail.com>
+# @purpose: Layout for departures page
+# @acknowledgements:
+-->
+
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container-fluid mb-4">
+
+      <h1 class="d-flex justify-content-center">Outbound</h1>
+      {% if outbound_results != 'None' %}
+        {% for result in outbound_results %}
+        <div class="d-flex justify-content-center">
+          <div class="mb-1 m-3">
+            <a href="https://www.realtimetrains.co.uk/service/gb-nr:{{ result['serviceUid'] }}/{{ result['runDate'] }}">
+              <h3>{{ result['locationDetail']['gbttBookedDeparture'] }} {{ result['locationDetail']['origin'][0]['description']}} to {{ result['locationDetail']['destination'][0]['description']}}</h3>
+            </a>
+          </div>
+          <br/>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="mb-2">
+            Departure time: {{ result['locationDetail']['realtimeDeparture'] }}
+          </div>
+          <div {% if result['locationDetail']['platformConfirmed'] == 'true' %}class="text-danger"{% endif %}>
+            Platform: {{ result['locationDetail']['platform'] }}
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="d-flex justify-content-center">
+          {{ outbound_results }}
+        </div>
+      {% endif %}
+
+      <h1 class="d-flex justify-content-center">Return</h1>
+      {% if return_results != 'None' %}
+        {% for result in return_results %}
+        <div class="d-flex justify-content-center">
+          <div class="mb-1 m-3">
+            <a href="https://www.realtimetrains.co.uk/service/gb-nr:{{ result['serviceUid'] }}/{{ result['runDate'] }}">
+              <h3>{{ result['locationDetail']['gbttBookedDeparture'] }} {{ result['locationDetail']['origin'][0]['description']}} to {{ result['locationDetail']['destination'][0]['description']}}</h3>
+            </a>
+          </div>
+          <br/>
+        </div>
+        {% if result['locationDetail']['realtimeArrival'] < result['locationDetail']['gbttBookedArrival'] %}
+          <div class="d-flex justify-content-center text-success display-5">
+            {{ result['locationDetail']['realtimeDeparture'] }}
+          </div>
+        {% elif result['locationDetail']['realtimeDeparture'] > result['locationDetail']['gbttBookedDeparture'] %}
+          <div class="d-flex justify-content-center text-danger display-6">
+            Scheduled: {{ result['locationDetail']['gbttBookedDeparture'] }}
+            Actual: {{ result['locationDetail']['realtimeArrival'] }}
+          </div>
+        {% elif result['locationDetail']['realtimeDeparture'] == result['locationDetail']['gbttBookedDeparture'] %}
+          <div class="d-flex justify-content-center display-5">
+            {{ result['locationDetail']['gbttBookedDeparture'] }}
+          </div>
+        {% endif %}
+        <div class="d-flex justify-content-center display-6 {% if result['locationDetail']['platformConfirmed'] == 'true' %}text-success{% endif %}">
+          Platform: {{ result['locationDetail']['platform'] }}
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="d-flex justify-content-center">
+          {{ return_results }}
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+{% endblock %}

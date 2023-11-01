@@ -28,16 +28,17 @@
         <br/>
         {% if result['locationDetail']['realtimeArrival'] < result['locationDetail']['gbttBookedArrival'] %}
           <div class="text-success display-5 m-3">
-            {{ result['locationDetail']['gbttBookedArrival'] }}
+            {{ result['locationDetail']['gbttBookedDeparture'] }}
           </div>
-        {% elif result['locationDetail']['realtimeArrival'] > result['locationDetail']['gbttBookedArrival'] %}
+        {% elif result['locationDetail']['realtimeDeparture'] > result['locationDetail']['gbttBookedDeparture'] %}
           <div class="text-danger display-6 m-3">
-            Scheduled: {{ result['locationDetail']['gbttBookedArrival'] }}
-            Actual: {{ result['locationDetail']['realtimeArrival'] }}
+            Scheduled: {{ result['locationDetail']['gbttBookedDeparture'] }}
+            <br/>
+            Actual: {{ result['locationDetail']['realtimeDeparture'] }}
           </div>
-        {% elif result['locationDetail']['realtimeArrival'] == result['locationDetail']['gbttBookedArrival'] %}
+        {% elif result['locationDetail']['realtimeDeparture'] == result['locationDetail']['gbttBookedDeparture'] %}
           <div class="display-5 m-3">
-            {{ result['locationDetail']['gbttBookedArrival'] }}
+            {{ result['locationDetail']['gbttBookedDeparture'] }}
           </div>
         {% endif %}
       </div>

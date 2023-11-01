@@ -22,7 +22,23 @@ base64_string = base64_bytes.decode("ascii")
 payload={}
 headers = {"Authorization": "Basic " + base64_string}
 
-def get_arrivals(to_station, from_stations):
+def get_departures_single_station(to_station, from_station):
+    results = []
+    endpoint_url = rtt_url + 'json/search/' + from_station + '/to/' + to_station
+    response = requests.request("GET", endpoint_url, headers=headers, data=payload)
+
+    if response.status_code == 200:
+        # turn the API response into useful Json
+        response = response.json()
+        if response['services'] is not None:
+            for service in response['services']:
+                results.append(service)
+        else:
+            results = 'None'
+
+    return results
+
+def get_departures_multiple_stations(to_station, from_stations):
     results = []
 
     for station in from_stations:
@@ -36,21 +52,5 @@ def get_arrivals(to_station, from_stations):
                 results.append(service)
 
     results.sort(key=lambda x: x['locationDetail']['realtimeArrival'])
-
-    return results
-
-def get_departures(to_station, from_station):
-    results = []
-    endpoint_url = rtt_url + 'json/search/' + from_station + '/to/' + to_station
-    response = requests.request("GET", endpoint_url, headers=headers, data=payload)
-
-    if response.status_code == 200:
-        # turn the API response into useful Json
-        response = response.json()
-        if response['services'] is not None:
-            for service in response['services']:
-                results.append(service)
-        else:
-            results = 'None'
 
     return results

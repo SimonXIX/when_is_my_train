@@ -37,7 +37,7 @@
           {{ result['locationDetail']['gbttBookedDeparture'] }}
         </div>
       {% endif %}
-      <div class="d-flex justify-content-center display-6 {% if result['locationDetail']['platformConfirmed'] == 'true' %}text-success{% endif %}">
+      <div class="d-flex justify-content-center display-6 {% if result['locationDetail']['platformConfirmed'] == true %}text-success{% endif %}">
         Platform: {{ result['locationDetail']['platform'] }}
       </div>
       {% endfor %}

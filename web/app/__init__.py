@@ -23,7 +23,7 @@ def index():
     to_station = os.environ.get('TO_STATION')
     from_stations = json.loads(os.environ.get('FROM_STATIONS'))
 
-    results = rtt.get_arrivals(to_station, from_stations)
+    results = rtt.get_departures_multiple_stations(to_station, from_stations)
 
     return render_template('index.html', results=results)
 
@@ -32,7 +32,7 @@ def coventry():
     to_station = 'COV'
     from_station = 'GLC'
 
-    outbound_results = rtt.get_departures(to_station, from_station)
-    return_results = rtt.get_departures(from_station, to_station)
+    outbound_results = rtt.get_departures_single_station(to_station, from_station)
+    return_results = rtt.get_departures_single_station(from_station, to_station)
 
     return render_template('departures.html', outbound_results=outbound_results, return_results=return_results)

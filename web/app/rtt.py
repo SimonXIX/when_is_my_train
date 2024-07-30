@@ -9,6 +9,7 @@ import os
 import base64
 import requests
 import urllib.request, json
+import gc
 
 rtt_url = os.environ.get('RTT_URL')
 rtt_username = os.environ.get('API_USERNAME')
@@ -36,6 +37,8 @@ def get_departures_single_station(to_station, from_station):
         else:
             results = 'None'
 
+    release_memory(response)
+
     return results
 
 def get_departures_multiple_stations(to_station, from_stations):
@@ -53,4 +56,24 @@ def get_departures_multiple_stations(to_station, from_stations):
 
     results.sort(key=lambda x: x['locationDetail']['realtimeArrival'])
 
+    release_memory(response)
+
     return results
+
+def get_full_departures_data(to_station, from_station):
+    results = []
+    endpoint_url = rtt_url + 'json/search/' + from_station + '/to/' + to_station
+    response = requests.request("GET", endpoint_url, headers=headers, data=payload)
+
+    if response.status_code == 200:
+        # turn the API response into useful Json
+        response = response.json()
+        results.append(response)
+
+    release_memory(response)
+
+    return results
+
+def release_memory(data):
+    del data
+    gc.collect()

@@ -52,7 +52,8 @@ def get_departures_multiple_stations(to_station, from_stations):
             # turn the API response into useful Json
             response = response.json()
             for service in response['services']:
-                results.append(service)
+                if service['serviceType'] != 'bus':
+                    results.append(service)
 
     results.sort(key=lambda x: x['locationDetail']['realtimeArrival'])
 
